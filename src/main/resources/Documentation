@@ -1,0 +1,35 @@
+***Transaction Management****
+
+----ACID----
+Atomic: it says all transaction is commited or rollbacked.
+COnsitency:COnsistent data in DB. e.g: DB will never have constraint violation.
+Isoated:Multiple transaction can work in parallel, and it should not impact other transaction.locking
+Durable:Change to transaction is persisted in DB.
+
+           ISOLATION
+@Transactional(isolation=Isolation.READ_COMMITTED,propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+DirtyRead:Transaction A write some data in DB while B read same data and meanwhile A revert transaction. here B still have old data
+NonRepatableRead: A and B read data whie after this B commit data,now when a again read data it get some other data.
+               it is mainly for one row hence updates are one.only UPDATE/DELETE.
+PhantomRead:A read range of data while B insert data which satify that range.Now when A read same data its condition gets satisfied.
+           Since it is range of record which means multiple rows.INSERT/UPDATE/DELETE
+
+ReadUncommited,-->no isolation
+ReadCommited,-->prevent dirty read.
+Repetable_read-->revent dirty read and,non repetable read
+Seriazable-->all
+
+            PROPOGATION
+REQUIRED:it uses same transaction if exist to commit or rollback transaction.
+REQUIRES_NEW
+NESTED
+MANDATORY: it says transaciton should alredy exist if not then it wl throw exception
+NEVER: opposite of mandatory.
+
+For transaction service we use transactiontemplate, which needs TransactionManager and datasource as dependent reference object.
+ transactionTemplate.execute(new TransactionalCallback<>(){
+ public void doInTransaction(TransactionStatus ts){
+
+ }
+
+ })
