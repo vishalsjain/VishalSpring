@@ -7,8 +7,10 @@ Isoated:Multiple transaction can work in parallel, and it should not impact othe
 Durable:Change to transaction is persisted in DB.
 
            ISOLATION
+It tells about how 2 different tran. would work.
 @Transactional(isolation=Isolation.READ_COMMITTED,propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-DirtyRead:Transaction A write some data in DB while B read same data and meanwhile A revert transaction. here B still have old data
+DirtyRead:Transaction A write some data in DB while B read same data and meanwhile A revert transaction. here B still have data which a have rollbacked
+          Dirty Read says it will read the uncommited data also.
 NonRepatableRead: A and B read data whie after this B commit data,now when a again read data it get some other data.
                it is mainly for one row hence updates are one.only UPDATE/DELETE.
 PhantomRead:A read range of data while B insert data which satify that range.Now when A read same data its condition gets satisfied.
@@ -20,6 +22,7 @@ Repetable_read-->revent dirty read and,non repetable read
 Seriazable-->all
 
             PROPOGATION
+it tells how transaction should behave.
 REQUIRED:it uses same transaction if exist to commit or rollback transaction.
 REQUIRES_NEW
 NESTED

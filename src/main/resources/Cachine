@@ -1,0 +1,8 @@
+@EnableCaching
+
+CacheManager--?
+ JCache,EhCache,GuavaCacheManager
+
+@Cachebale(value="cacheName",key="#methodinpuy")-->key is used as search criteria
+@CacheEvict
+@CachePut
