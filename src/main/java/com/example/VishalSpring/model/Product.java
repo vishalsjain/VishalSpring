@@ -85,6 +85,18 @@ public class Product {
         return price;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", version=" + version +
+                ", productId='" + productId + '\'' +
+                ", description='" + description + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
     public void setPrice(BigDecimal price) {
         this.price = price;
     }

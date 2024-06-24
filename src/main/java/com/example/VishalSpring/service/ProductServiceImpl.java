@@ -1,5 +1,6 @@
 package com.example.VishalSpring.service;
 
+import com.example.VishalSpring.dao.service.ProductDaoImpl;
 import com.example.VishalSpring.model.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,39 +20,39 @@ import java.util.List;
 public class ProductServiceImpl {
     private final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
-    @Autowired
-    DataSource data;
-
-    public static List<Product> p=new ArrayList<>();
-    static{
-
-        p.add(new Product(1,1,"11","ddas","asdad",new BigDecimal(100)));
-        p.add(new Product(2,2,"22","ddas","asdad",new BigDecimal(100)));
+    public void setData(ProductDaoImpl data) {
+        this.data = data;
     }
-
     @Autowired
-    public void setProductRepository() {
-    }
-
+    ProductDaoImpl data;
     public List<Product> listAllProducts() {
         logger.debug("listAllProducts called");
-        return p;
+        return data.listAllProducts();
     }
 
     public Product getProductById(Integer id) {
         logger.debug("getProductById called");
-        return p.get(id);
+        Product p=data.getProductById(id);
+        if (p == null) {
+            throw new RuntimeException("Vishal Exception");
+}
+        return p;
     }
 
     @Transactional(isolation=Isolation.READ_COMMITTED,propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public Product saveProduct(Product product) {
         logger.debug("saveProduct called");
-        p.add(product);
-        return product;
+        return data.saveProduct(product);
     }
 
-    public void deleteProduct(Integer id) {
+    public void deleteProduct(Integer id) throws  RuntimeException{
         logger.debug("deleteProduct called");
-        p.remove(id);
-       }
+      try {
+          data.deleteProduct(id);
+      }
+      catch(RuntimeException e){
+          throw new RuntimeException();
+      }
+
+      }
 }

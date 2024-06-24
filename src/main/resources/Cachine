@@ -3,6 +3,6 @@
 CacheManager--?
  JCache,EhCache,GuavaCacheManager
 
-@Cachebale(value="cacheName",key="#methodinpuy")-->key is used as search criteria
+@Cachebale(value="cacheName",key="#methodinpuy")-->key is used as search criteriamm   l  hi,no.k,
 @CacheEvict
 @CachePut
